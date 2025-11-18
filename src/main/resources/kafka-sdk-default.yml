@@ -1,0 +1,74 @@
+# Kafka SDK Default Configuration
+kafka-sdk:
+  bootstrap-servers: localhost:9092
+
+  producer:
+    acks: all
+    retries: 3
+    batch-size: 16384
+    linger-ms: 1
+    buffer-memory: 33554432
+    compression-type: snappy
+    enable-idempotence: true
+    max-in-flight-requests: 5
+
+  consumer:
+    auto-offset-reset: latest
+    enable-auto-commit: false
+    auto-commit-interval-ms: 5000
+    session-timeout-ms: 45000
+    heartbeat-interval-ms: 3000
+    max-poll-records: 500
+    max-poll-interval-ms: 300000
+    fetch-min-bytes: 1
+    fetch-max-wait-ms: 500
+    isolation-level: read_committed
+
+  streams:
+    num-stream-threads: 1
+    cache-max-bytes-buffering: 10485760
+    commit-interval-ms: 30000
+    processing-guarantee: at_least_once
+
+  admin:
+    request-timeout-ms: 30000
+    default-api-timeout-ms: 60000
+    retries: 5
+
+  security:
+    protocol: PLAINTEXT
+    # ssl:
+    #   enabled: false
+    #   truststore-location:
+    #   truststore-password:
+    #   keystore-location:
+    #   keystore-password:
+    # sasl:
+    #   mechanism: PLAIN
+    #   jaas-config:
+
+  monitoring:
+    metrics-enabled: true
+    tracing-enabled: true
+    metrics-prefix: kafka.sdk
+    prometheus-enabled: true
+    prometheus-port: 9090
+    health-check-enabled: true
+    health-check-interval-seconds: 30
+
+  resilience:
+    circuit-breaker:
+      enabled: true
+      failure-rate-threshold: 50
+      wait-duration-in-open-state-seconds: 60
+      permitted-calls-in-half-open: 10
+      minimum-number-of-calls: 10
+    retry:
+      enabled: true
+      max-attempts: 3
+      wait-duration-ms: 500
+      exponential-backoff-multiplier: 2.0
+    rate-limiter:
+      enabled: false
+      limit-for-period: 100000
+      limit-refresh-period-seconds: 1
